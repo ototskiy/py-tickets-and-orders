@@ -18,10 +18,11 @@ def create_order(
     if date:
         Order.objects.filter(pk=order.pk).update(created_at=date)
 
+    movie_sessions = MovieSession.objects.all()
     for ticket in tickets:
         Ticket.objects.create(
             order=order,
-            movie_session=MovieSession.objects.get(
+            movie_session=movie_sessions.get(
                 pk=ticket["movie_session"]
             ),
             row=ticket["row"],
