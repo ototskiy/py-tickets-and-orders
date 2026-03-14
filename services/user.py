@@ -19,7 +19,9 @@ def create_user(
     )
 
 
-def get_user(user_id: int) -> User:
+def get_user(
+        user_id: int
+) -> User:
     return get_user_model().objects.get(pk=user_id)
 
 
@@ -31,16 +33,15 @@ def update_user(
         first_name: str = None,
         last_name: str = None
 ) -> None:
-    user = get_user_model().objects.filter(pk=user_id)
+    user = get_user(user_id)
     if username:
-        user.update(username=username)
+        user.username=username
     if password:
-        user_password = get_user_model().objects.get(pk=user_id)
-        user_password.set_password(password)
-        user_password.save()
+        user.set_password(password)
     if email:
-        user.update(email=email)
+        user.email=email
     if first_name:
-        user.update(first_name=first_name)
+        user.first_name=first_name
     if last_name:
-        user.update(last_name=last_name)
+        user.last_name=last_name
+    user.save()
